@@ -25,7 +25,7 @@ function doPost(e) {
     if (!name || !phone) {
       return jsonResponse({
         success: false,
-        message: "Missing name or phone.",
+        message: "Please enter a valid Lebanese mobile number starting with 03.",
       });
     }
 
@@ -226,17 +226,14 @@ function findExistingEntryByPhone(props, sheet, phone) {
     return null;
   }
 
-  const phoneRange = sheet.getRange(2, 4, lastRow - 1, 1);
-  const match = phoneRange
-    .createTextFinder(phone)
-    .matchEntireCell(true)
-    .findNext();
+  const phoneValues = sheet.getRange(2, 4, lastRow - 1, 1).getValues();
+  const matchIndex = phoneValues.findIndex((row) => cleanPhone(row[0]) === phone);
 
-  if (!match) {
+  if (matchIndex === -1) {
     return null;
   }
 
-  const rowNumber = match.getRow();
+  const rowNumber = matchIndex + 2;
   const row = sheet.getRange(rowNumber, 1, 1, 10).getValues()[0];
   props.setProperty(getPhoneEntryKey(phone), String(rowNumber));
 
@@ -361,7 +358,20 @@ function cleanEmail(value) {
 }
 
 function cleanPhone(value) {
-  return String(value || "").replace(/\D/g, "");
+  let phone = String(value || "").replace(/\D/g, "");
+
+  // Treat 03xxxxxx, 3xxxxxx, +9613xxxxxx and 009613xxxxxx as one number.
+  if (phone.startsWith("00961")) {
+    phone = phone.slice(5);
+  } else if (phone.startsWith("961")) {
+    phone = phone.slice(3);
+  }
+
+  if (/^3\d{6}$/.test(phone)) {
+    phone = `0${phone}`;
+  }
+
+  return /^03\d{6}$/.test(phone) ? phone : "";
 }
 
 function formatSheetDate(value) {

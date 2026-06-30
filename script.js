@@ -55,6 +55,7 @@ const prizes = [
 ];
 
 const registerScreen = document.getElementById("registerScreen");
+const pageLoader = document.getElementById("pageLoader");
 const wheelScreen = document.getElementById("wheelScreen");
 const resultScreen = document.getElementById("resultScreen");
 const screens = [registerScreen, wheelScreen, resultScreen];
@@ -93,6 +94,52 @@ let currentResult = null;
 let currentCustomer = null;
 let pendingSpinResult = null;
 let spinFallbackTimer = null;
+let pullStartY = null;
+let pullDistance = 0;
+const pullToRefreshDistance = 90;
+
+window.addEventListener("load", () => {
+  window.setTimeout(() => {
+    pageLoader.classList.add("is-hidden");
+  }, 400);
+});
+
+document.addEventListener(
+  "touchstart",
+  (event) => {
+    if (window.scrollY === 0 && event.touches.length === 1) {
+      pullStartY = event.touches[0].clientY;
+      pullDistance = 0;
+    }
+  },
+  { passive: true },
+);
+
+document.addEventListener(
+  "touchmove",
+  (event) => {
+    if (pullStartY === null || event.touches.length !== 1) {
+      return;
+    }
+
+    pullDistance = Math.max(0, event.touches[0].clientY - pullStartY);
+  },
+  { passive: true },
+);
+
+document.addEventListener("touchend", () => {
+  if (pullStartY !== null && pullDistance >= pullToRefreshDistance) {
+    window.location.reload();
+  }
+
+  pullStartY = null;
+  pullDistance = 0;
+});
+
+document.addEventListener("touchcancel", () => {
+  pullStartY = null;
+  pullDistance = 0;
+});
 
 prizes.forEach((prize, index) => {
   [prize.name, prize.label].forEach((name) => {
@@ -363,10 +410,20 @@ function getSpinRotation(prizeIndex) {
   return 360 * 4 + rotationToTarget;
 }
 
+function normalizeLebanese03Phone(value) {
+  const digits = String(value || "").replace(/\D/g, "");
+  return /^03\d{6}$/.test(digits) ? digits : "";
+}
+
 registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const phone = registerForm.customerPhone.value.trim();
+  const phone = normalizeLebanese03Phone(registerForm.customerPhone.value);
+
+  if (!phone) {
+    window.alert("Please enter 8 digits starting with 03 (example: 03123456).");
+    return;
+  }
 
   currentCustomer = {
     name: registerForm.customerName.value.trim(),
@@ -376,10 +433,7 @@ registerForm.addEventListener("submit", async (event) => {
     phone,
   };
 
-  if (
-    !currentCustomer.name ||
-    !currentCustomer.phone
-  ) {
+  if (!currentCustomer.name) {
     window.alert("Please enter name and phone number.");
     return;
   }

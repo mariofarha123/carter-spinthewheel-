@@ -53,6 +53,48 @@ button:disabled {
   opacity: 0.72;
 }
 
+.page-loader {
+  position: fixed;
+  top: max(14px, env(safe-area-inset-top));
+  left: 50%;
+  z-index: 1000;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 24px rgba(7, 29, 61, 0.22);
+  transform: translateX(-50%);
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.page-loader.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.page-loader-icon {
+  width: 25px;
+  height: 25px;
+  border: 3px solid rgba(8, 169, 230, 0.24);
+  border-top-color: var(--carters-blue);
+  border-radius: 50%;
+  animation: page-loader-turn 700ms linear infinite;
+}
+
+@keyframes page-loader-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader-icon {
+    animation-duration: 1.5s;
+  }
+}
+
 .screen {
   height: 100vh;
   height: 100svh;
@@ -779,7 +821,7 @@ input:focus {
 
   .card {
     padding: 15px 13px;
-    margin-bottom: 182px;
+    /* margin-bottom: 182px; */
   }
 
   .brand-lockup {
@@ -855,6 +897,7 @@ input:focus {
 
 @media (max-height: 680px) and (max-width: 720px) {
   .card {
+    /* margin-top: 147px; */
     padding-top: 12px;
     padding-bottom: 12px;
   }
