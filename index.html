@@ -32,7 +32,9 @@
 
           <form class="form-grid" id="registerForm">
             <div class="form-field">
-              <label for="customerName">Name</label>
+              <label for="customerName">
+                Name <span class="required-sign" aria-hidden="true"style="color: red;">*</span>
+              </label>
               <input
                 id="customerName"
                 name="customerName"
@@ -53,14 +55,16 @@
             </div>
 
             <div class="form-field">
-              <label for="customerPhone">Phone Number</label>
+              <label for="customerPhone">
+                Phone Number <span class="required-sign" aria-hidden="true" style="color: red;">*</span>
+              </label>
               <input
                 id="customerPhone"
                 name="customerPhone"
                 type="tel"
                 autocomplete="tel"
                 inputmode="tel"
-                placeholder="03 123 456"
+                placeholder="03123456"
                 pattern="03[0-9 ]{6,8}"
                 title="Enter a Lebanese mobile number starting with 03"
                 required

@@ -53,6 +53,11 @@ button:disabled {
   opacity: 0.72;
 }
 
+label .required-sign {
+  color: var(--danger);
+  font-weight: 700;
+}
+
 .page-loader {
   position: fixed;
   top: max(14px, env(safe-area-inset-top));
