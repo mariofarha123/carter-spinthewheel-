@@ -410,18 +410,18 @@ function getSpinRotation(prizeIndex) {
   return 360 * 4 + rotationToTarget;
 }
 
-function normalizeLebanese03Phone(value) {
+function normalizeLebaneseMobilePhone(value) {
   const digits = String(value || "").replace(/\D/g, "");
-  return /^03\d{6}$/.test(digits) ? digits : "";
+  return /^(?:03|70|71|78|79|81)\d{6}$/.test(digits) ? digits : "";
 }
 
 registerForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const phone = normalizeLebanese03Phone(registerForm.customerPhone.value);
+  const phone = normalizeLebaneseMobilePhone(registerForm.customerPhone.value);
 
   if (!phone) {
-    window.alert("Please enter 8 digits starting with 03 (example: 03123456).");
+    window.alert("Enter 8 digits starting with 03, 70, 71, 78, 79, or 81.");
     return;
   }
 

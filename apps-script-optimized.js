@@ -25,7 +25,7 @@ function doPost(e) {
     if (!name || !phone) {
       return jsonResponse({
         success: false,
-        message: "Please enter a valid Lebanese mobile number starting with 03.",
+        message: "Please enter a valid Lebanese mobile number.",
       });
     }
 
@@ -231,7 +231,7 @@ function cleanEmail(value) {
 function cleanPhone(value) {
   let phone = String(value || "").replace(/\D/g, "");
 
-  // Treat 03xxxxxx, 3xxxxxx, +9613xxxxxx and 009613xxxxxx as one number.
+  // Convert international Lebanese numbers to their local form.
   if (phone.startsWith("00961")) {
     phone = phone.slice(5);
   } else if (phone.startsWith("961")) {
@@ -242,7 +242,7 @@ function cleanPhone(value) {
     phone = `0${phone}`;
   }
 
-  return /^03\d{6}$/.test(phone) ? phone : "";
+  return /^(?:03|70|71|78|79|81)\d{6}$/.test(phone) ? phone : "";
 }
 
 function formatSheetDate(value) {
