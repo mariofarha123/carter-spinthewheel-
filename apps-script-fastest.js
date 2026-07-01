@@ -54,7 +54,10 @@ function doPost(e) {
       });
     }
 
-    const existingEntry = findExistingEntryByPhone(props, entriesSheet, phone);
+    // Build the complete phone index once. After that, a missing property means
+    // the phone is new, so every submission does not need a full-column scan.
+    ensureGameState(props, entriesSheet, promoCodesSheet);
+    const existingEntry = findExistingEntryFromCache(props, phone, entriesSheet);
 
     if (existingEntry) {
       return jsonResponse({
@@ -63,8 +66,6 @@ function doPost(e) {
         result: existingEntry,
       });
     }
-
-    ensureGameState(props, entriesSheet, promoCodesSheet);
 
     const prize = pickPrizeFromState(props);
     const createdAt = new Date();
@@ -200,12 +201,19 @@ function ensureGameState(props, entriesSheet, promoCodesSheet) {
   rebuildGameState();
 }
 
-function findExistingEntryFromCache(props, phone) {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const entriesSheet = spreadsheet.getSheetByName(ENTRIES_SHEET_NAME);
+function findExistingEntryFromCache(props, phone, entriesSheet) {
   const rowNumber = Number(props.getProperty(getPhoneEntryKey(phone)) || 0);
 
-  if (!entriesSheet || rowNumber < 2 || rowNumber > entriesSheet.getLastRow()) {
+  if (rowNumber < 2) {
+    return null;
+  }
+
+  if (!entriesSheet) {
+    const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+    entriesSheet = spreadsheet.getSheetByName(ENTRIES_SHEET_NAME);
+  }
+
+  if (!entriesSheet || rowNumber > entriesSheet.getLastRow()) {
     return null;
   }
 
@@ -371,7 +379,7 @@ function cleanPhone(value) {
     phone = `0${phone}`;
   }
 
-  return /^(?:03|70|71|78|79|81)\d{6}$/.test(phone) ? phone : "";
+  return /^(?:03|70|71|76|78|79|81)\d{6}$/.test(phone) ? phone : "";
 }
 
 function formatSheetDate(value) {

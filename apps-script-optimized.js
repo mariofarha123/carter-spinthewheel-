@@ -242,7 +242,7 @@ function cleanPhone(value) {
     phone = `0${phone}`;
   }
 
-  return /^(?:03|70|71|78|79|81)\d{6}$/.test(phone) ? phone : "";
+  return /^(?:03|70|71|76|78|79|81)\d{6}$/.test(phone) ? phone : "";
 }
 
 function formatSheetDate(value) {

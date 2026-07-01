@@ -78,7 +78,7 @@ const expiryLine = document.querySelector(".expiry");
 const branchLine = document.querySelector(".branch-line");
 const sliceAngle = 360 / prizes.length;
 const pointerAngle = 270;
-const spinDurationMs = 1800;
+const spinDurationMs = 5000;
 const spinFallbackDelayMs = spinDurationMs + 250;
 const dateFormatter = new Intl.DateTimeFormat("en-GB", {
   day: "2-digit",
@@ -407,12 +407,12 @@ function getSpinRotation(prizeIndex) {
   const targetAngle = normalizeRotation(pointerAngle - prizeCenterAngle);
   const rotationToTarget = normalizeRotation(targetAngle - currentAngle);
 
-  return 360 * 4 + rotationToTarget;
+  return 360 * 8 + rotationToTarget;
 }
 
 function normalizeLebaneseMobilePhone(value) {
   const digits = String(value || "").replace(/\D/g, "");
-  return /^(?:03|70|71|78|79|81)\d{6}$/.test(digits) ? digits : "";
+  return /^(?:03|70|71|76|78|79|81)\d{6}$/.test(digits) ? digits : "";
 }
 
 registerForm.addEventListener("submit", async (event) => {
@@ -421,7 +421,7 @@ registerForm.addEventListener("submit", async (event) => {
   const phone = normalizeLebaneseMobilePhone(registerForm.customerPhone.value);
 
   if (!phone) {
-    window.alert("Enter 8 digits starting with 03, 70, 71, 78, 79, or 81.");
+    window.alert("Enter 8 digits starting with 03, 70, 71, 76, 78, 79, or 81.");
     return;
   }
 

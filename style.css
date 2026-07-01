@@ -11,7 +11,7 @@
   --muted: #55708a;
   --danger: #ec1b25;
   --shadow: 0 24px 70px rgba(7, 29, 61, 0.18);
-  --spin-duration: 1.8s;
+  --spin-duration: 5s;
 }
 
 * {
@@ -302,7 +302,7 @@ input:focus {
   display: grid;
   place-items: center;
   filter: drop-shadow(0 18px 22px rgba(8, 40, 77, 0.18));
-  contain: layout paint;
+  contain: layout;
 }
 
 .wheel-stand {
@@ -494,7 +494,9 @@ input:focus {
 
 .result-title {
   margin: 0 0 16px;
-  font-size: 32px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.15;
   color: var(--oshkosh-navy);
 }
 
@@ -502,7 +504,9 @@ input:focus {
 .promo-label,
 .branch-line {
   margin: 0 0 16px;
-  font-size: 22px;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.35;
 }
 
 .player-details {
@@ -510,8 +514,9 @@ input:focus {
   gap: 6px;
   margin: 0 0 16px;
   color: var(--oshkosh-navy);
-  font-size: 18px;
-  line-height: 1.25;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.35;
 }
 
 .player-details p {
@@ -519,35 +524,38 @@ input:focus {
 }
 
 .player-details span {
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .promo-label {
   margin-bottom: 8px;
-  font-size: 19px;
+  font-size: 17px;
 }
 
 .promo-code {
   margin: 0 0 18px;
   color: var(--mid-blue);
-  font-size: 24px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.025em;
 }
 
 .hard-luck-message {
   margin: 0 auto 18px;
   max-width: 540px;
   color: var(--danger);
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 20px;
+  font-weight: 500;
   line-height: 1.35;
 }
 
 .expiry {
   margin: 0 0 18px;
   color: var(--danger);
-  font-size: 20px;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.35;
 }
 
 .promo-code.is-expired {
@@ -633,23 +641,29 @@ input:focus {
   }
 
   .result-title {
-    font-size: 38px;
+    font-size: 34px;
   }
 
   .result-line,
-  .player-details,
-  .promo-label,
   .branch-line {
-    font-size: 25px;
+    font-size: 21px;
+  }
+
+  .player-details {
+    font-size: 19px;
+  }
+
+  .promo-label {
+    font-size: 18px;
   }
 
   .promo-code,
   .hard-luck-message {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .expiry {
-    font-size: 22px;
+    font-size: 18px;
   }
 }
 
@@ -689,26 +703,29 @@ input:focus {
   }
 
   .result-title {
-    font-size: 28px;
+    font-size: 27px;
   }
 
   .result-line,
-  .player-details,
-  .promo-label,
   .branch-line {
-    font-size: 20px;
+    font-size: 19px;
+  }
+
+  .player-details,
+  .promo-label {
+    font-size: 17px;
   }
 
   .promo-code {
-    font-size: 22px;
+    font-size: 21px;
   }
 
   .hard-luck-message {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .expiry {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
@@ -796,26 +813,29 @@ input:focus {
   }
 
   .result-title {
-    font-size: 24px;
+    font-size: 23px;
   }
 
   .result-line,
-  .player-details,
-  .promo-label,
   .branch-line {
-    font-size: 18px;
+    font-size: 17px;
+  }
+
+  .player-details,
+  .promo-label {
+    font-size: 16px;
   }
 
   .promo-code {
-    font-size: 19px;
+    font-size: 18px;
   }
 
   .hard-luck-message {
-    font-size: 19px;
+    font-size: 18px;
   }
 
   .expiry {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 
@@ -871,26 +891,30 @@ input:focus {
 
   .result-title {
     margin-bottom: 12px;
-    font-size: 22px;
+    font-size: 21px;
   }
 
   .result-line,
-  .player-details,
-  .promo-label,
   .branch-line {
     margin-bottom: 12px;
     font-size: 16px;
   }
 
+  .player-details,
+  .promo-label {
+    margin-bottom: 12px;
+    font-size: 15px;
+  }
+
   .promo-code,
   .hard-luck-message {
     margin-bottom: 14px;
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .expiry {
     margin-bottom: 14px;
-    font-size: 15px;
+    font-size: 14px;
   }
 }
 
